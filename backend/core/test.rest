@@ -1,0 +1,17 @@
+POST http://127.0.0.1:8000/api/token/
+Content-Type: application/json
+
+{"username": "ajemar", "password": "1209"}
+
+###
+
+POST http://127.0.0.1:8000/api/products/signup
+Content-Type: application/json
+
+{"username": "zack1", "password": "Pass1234!", "email": "zack@gmail.com"}
+
+###
+
+GET http://localhost:8000/media/products/images/iphone_15_pro_max_blue_titanium_pdp_image_position-1__ww-en_3_rvYZiQ4.jpg
+Content-Type: application/json
+
