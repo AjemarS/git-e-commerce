@@ -1,0 +1,6 @@
+footer {
+  flex-grow: 0;
+  background-color: black;
+  color: white;
+  padding: 15px;
+}

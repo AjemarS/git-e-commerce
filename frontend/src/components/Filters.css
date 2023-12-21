@@ -1,0 +1,80 @@
+.filters {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+
+.filters__clear--btn {
+  display: flex;
+  color: #aaa;
+  font-size: 14px;
+  float: right;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.filters__clear--btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.filters__menu {
+  padding: 5px;
+  position: relative;
+}
+
+.filters__menu__title {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px #fff solid;
+  padding: 10px 5px;
+  margin-bottom: 5px;
+  transition: all ease .3s;
+}
+
+.filters__menu__title:active {
+  background-color: #eee;
+}
+
+.filters__menu__title:hover>.filters__menu__title__icon {
+  transform: rotateX(90);
+}
+
+.filters__menu__checkboxes>div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  padding: 0 5px;
+  accent-color: olive;
+}
+
+.filters__menu__checkboxes--label {
+  margin-bottom: 2px;
+  font-size: 18px;
+
+}
+
+.filters__apply__btn {
+  width: 100px;
+  position: absolute;
+  top: 15px;
+  left: 215px;
+  padding: 5px 10px;
+  background-color: olive;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}

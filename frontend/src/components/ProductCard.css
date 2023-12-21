@@ -1,0 +1,113 @@
+.product__card {
+  width: 200px;
+  height: 300px;
+  max-width: 200px;
+  max-height: 300px;
+  padding: 15px;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  transition: all ease 0.3s;
+}
+
+.product__card:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 40px 0px rgba(128, 128, 0, 0.2);
+}
+
+.product__card--title {
+  font-weight: 700;
+  font-size: px;
+}
+
+.product__card--image {
+  width: 200px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product__card--image img {
+  width: 175px;
+  max-height: 200px;
+}
+
+.product__card--bottom {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product__card--price {
+  font-size: 14px;
+}
+
+.product__card--btns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.product__card__btn--buy {
+  background-color: olive;
+  color: white;
+  padding: 5px 15px 5px 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all ease 0.3s;
+}
+
+.product__card__btn--buy:hover {
+  background-color: white;
+  color: olive;
+  border: 2px olive solid;
+}
+
+.product__card__btn--buy:hover:visited{
+  color: olive;
+}
+
+.product__card__btn--buy:active {
+  background-color: white;
+  color: olive;
+  border: 2px transparent solid;
+}
+
+.product__card__btn--buy:visited {
+  color: #fff;
+}
+
+.product__card__btn--like {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  padding-right: 6px;
+}
+
+.product__card__btn--like:hover path#background {
+  fill: olive;
+}
+
+.product__card__btn--like:hover path#stroke {
+  fill: olive;
+}
+
+.product__card__btn--like:active path#stroke {
+  fill: black;
+}
+
+.product__card__btn--like:hover>.product__card__btn--like img {
+  background-color: olive;
+}

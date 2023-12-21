@@ -1,0 +1,40 @@
+.hoverable-select {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+}
+
+.selected-option {
+    padding: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: calc(100% - 2px);
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
+}
+
+.options-list li {
+    padding: 8px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.options-list li:hover {
+    background-color: olive;
+    color: white;
+}
+
+.hoverable-select.open .options-list {
+    display: block;
+}

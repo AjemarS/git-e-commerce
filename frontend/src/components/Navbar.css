@@ -1,0 +1,101 @@
+header {
+  width: 100%;
+  height: 100px;
+  position: sticky;
+  top: 0;
+  background: white;
+  flex-grow: 0;
+  z-index: 1;
+}
+
+.navbar__layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100px;
+  box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navbar__item--logo {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Cookie", cursive;
+  font-size: 48px;
+}
+
+.navbar__item--logo a:visited {
+  color: black;
+}
+
+.navbar__item--search {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar__item--btns {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar__item__btns--img {
+  width: 32px;
+  height: 32px;
+}
+
+#background {
+  fill: white;
+}
+
+.navbar__item--login-btn {
+  background-color: black;
+  color: white;
+  font-size: 24px;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.navbar__item__btns--cart,
+.navbar__item__btns--user {
+  position: relative;
+}
+
+.navbar__item__btns--liked>a>img {
+  background: none;
+}
+
+.navbar__item__btns--liked:hover {
+  background-color: olive;
+}
+
+.userBox {
+  width: 140px;
+}
+
+.cartBox {
+  width: 300px;
+}
+
+.navbar__item__popups {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  padding: 50px 30px;
+  transform: translate(-50%);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px dotted olive;
+  box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.2);
+}
