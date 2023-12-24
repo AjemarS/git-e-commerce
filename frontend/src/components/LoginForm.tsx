@@ -21,6 +21,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -88,7 +89,7 @@ const LoginForm = () => {
       }
     }
   };
-  
+
   return (
     <div id="login-page-layout">
       <div className="form__layout">
@@ -117,6 +118,7 @@ const LoginForm = () => {
               type="password"
               value={password}
               autoComplete="current-password"
+              minLength={8}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}

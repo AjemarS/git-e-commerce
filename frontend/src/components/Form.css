@@ -30,11 +30,22 @@
     width: 300px;
     height: 30px;
     border-radius: 5px;
+    border-style: solid;
+    border-color: #000;
     font-size: 16px;
+    background-color: transparent;
 }
 
-.form__input:active {
-    border-color: olive
+.form__item--input:focus:invalid {
+    border-color: #f00;
+}
+
+.form__item--input:focus:invalid {
+    border-color: #000;
+}
+
+.form__item--input:valid {
+    border-color: olive;
 }
 
 .form__item--questions {
@@ -127,7 +138,14 @@
 }
 
 .form__btn:disabled {
-    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    color: #3c4043;
+    box-shadow: none;
+}
+
+.form__btn:disabled:hover {
+    cursor: default;
+    box-shadow: none;
+    background: transparent;
 }
 
 #register-question {
@@ -150,4 +168,11 @@
 
 #register-question>a:active {
     text-decoration: none;
+}
+
+.validation-error {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #f00;
+    padding: 5px 0;
 }
