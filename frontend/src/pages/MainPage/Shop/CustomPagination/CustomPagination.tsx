@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import "./CustomPagination.css";
 import Pagination from "@mui/material/Pagination";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import axios from "../api/axios";
-import { setProducts } from "../store/reducers/ProductSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
+import axios from "../../../../api/axios";
+import { setProducts } from "../../../../store/reducers/ProductSlice";
 
 type Props = {};
 

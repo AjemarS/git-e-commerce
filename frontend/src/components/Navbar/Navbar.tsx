@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import SearchBar from "./SearchBar";
-import { useAppSelector } from "../hooks/redux";
+import { useAppSelector } from "../../hooks/redux";
 import UserBox from "./UserBox";
 import CartBox from "./CartBox";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -24,7 +24,6 @@ const Navbar = () => {
         </div>
 
         <div className="navbar__item--btns">
-
           {isAuthenticated ? (
             <CartBox />
           ) : (

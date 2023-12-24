@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-import { ProductProps } from "../models/product";
+import { ProductProps } from "../../../../models/product";
 import { Link } from "react-router-dom";
 import "./ProductList.css";
 
 const ProductList: FC<ProductProps> = ({ product }) => {
-
   return (
     <Link to={`/products/${product.id}`}>
       <div className="product__list">
@@ -19,9 +18,7 @@ const ProductList: FC<ProductProps> = ({ product }) => {
         </div>
 
         <div className="product__list--options">
-          <button className="product__list--btn">
-            Buy
-          </button>
+          <button className="product__list--btn">Buy</button>
         </div>
       </div>
     </Link>

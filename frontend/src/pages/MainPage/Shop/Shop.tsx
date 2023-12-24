@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { IProduct } from "../models/product";
-import RenderComponent from "../components/RenderComponent";
-import ProductCard from "../components/ProductCard";
-import ProductList from "../components/ProductList";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { setCount, setCurrentLink, setProducts } from "../store/reducers/ProductSlice";
+import { IProduct } from "../../../models/product";
+import RenderComponent from "../../../components/RenderComponent";
+import ProductCard from "./ProductCard/ProductCard";
+import ProductList from "./ProductList/ProductList";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
 import "./Shop.css";
-import axios from "../api/axios";
-import Pagination from "./CustomPagination";
-import HoverableSelect from "./HoverableSelect";
+import axios from "../../../api/axios";
+import Pagination from "./CustomPagination/CustomPagination";
+import HoverableSelect from "./HoverableSelect/HoverableSelect";
 
 const Shop: React.FC = () => {
   const [isList, setIsList] = useState(false);

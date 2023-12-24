@@ -1,9 +1,9 @@
 import { useState, FC } from "react";
 import "./ProductCard.css";
-import { ProductProps } from "../models/product";
-import { addCartItem, setIsHoveredCartBox, setCart } from "../store/reducers/CartSlice";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import axios from "../api/axios";
+import { ProductProps } from "../../../../models/product";
+import { addCartItem, setIsHoveredCartBox, setCart } from "../../../../store/reducers/CartSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
+import axios from "../../../../api/axios";
 import { toast } from "react-toastify";
 
 const ProductCard: FC<ProductProps> = ({ product }) => {

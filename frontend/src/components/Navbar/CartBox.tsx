@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { setIsHoveredCartBox } from "../store/reducers/CartSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setIsHoveredCartBox } from "../../store/reducers/CartSlice";
 // import axios from "../api/axios";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
@@ -10,7 +10,7 @@ const CartBox = (props: Props) => {
   const { cart, isHoveredCartBox } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   // const accessToken = localStorage.getItem("accessToken");
-  // 
+  //
   // axios.get("cart/", { headers: { Authorization: `Bearer ${accessToken}` } }).then((response) => {
   //   console.log(response.data);
   // });
@@ -27,7 +27,7 @@ const CartBox = (props: Props) => {
         }}
       >
         <Link to={"/cart"}>
-          <ShoppingCartOutlinedIcon fontSize="large"/>
+          <ShoppingCartOutlinedIcon fontSize="large" />
         </Link>
         {isHoveredCartBox && (
           <div

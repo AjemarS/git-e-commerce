@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useState } from "react";
 import "./Filters.css";
-import axios from "../api/axios";
-import RenderComponent from "./RenderComponent";
-import { useAppDispatch } from "../hooks/redux";
-import { setCount, setCurrentLink, setProducts } from "../store/reducers/ProductSlice";
+import axios from "../../../api/axios";
+import RenderComponent from "../../../components/RenderComponent";
+import { useAppDispatch } from "../../../hooks/redux";
+import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
 import PriceRangeInput from "./PriceRangeInput";
 import ExpandIcon from "./ExpandIcon";
 

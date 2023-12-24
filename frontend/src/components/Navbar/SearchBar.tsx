@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
-import { useAppDispatch } from "../hooks/redux";
-import axios from "../api/axios";
-import { setCount, setCurrentLink, setProducts } from "../store/reducers/ProductSlice";
+import { useAppDispatch } from "../../hooks/redux";
+import axios from "../../api/axios";
+import { setCount, setCurrentLink, setProducts } from "../../store/reducers/ProductSlice";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");

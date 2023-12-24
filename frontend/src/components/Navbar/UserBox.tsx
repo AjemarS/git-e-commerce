@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import Logout from "./Logout";
-import { logout } from "../store/reducers/UserSlice";
-import axios from "../api/axios";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import Logout from "../Logout";
+import { logout } from "../../store/reducers/UserSlice";
+import axios from "../../api/axios";
 import { toast } from "react-toastify";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 

@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "src/components/LoginForm.tsx"]
+  "include": ["src", "src/pages/LoginPage/LoginForm.tsx"]
 }

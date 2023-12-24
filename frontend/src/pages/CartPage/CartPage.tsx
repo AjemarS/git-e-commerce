@@ -1,6 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { removeCartItem } from "../store/reducers/CartSlice";
-
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { removeCartItem } from "../../store/reducers/CartSlice";
 
 type Props = {};
 

@@ -1,8 +1,7 @@
-import Shop from "../components/Shop";
-import Filters from "../components/Filters";
+import Shop from "./Shop/Shop";
+import Filters from "./Filters/Filters";
 
 const MainPage: React.FC = () => {
-
   return (
     <main>
       <Filters />

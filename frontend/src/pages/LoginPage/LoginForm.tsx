@@ -1,13 +1,13 @@
-import "./Form.css";
+import "../../components/Form.css";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, setUser, setUserToken, setUserId } from "../store/reducers/UserSlice";
-import { useAppDispatch } from "../hooks/redux";
+import { login, setUser, setUserToken, setUserId } from "../../store/reducers/UserSlice";
+import { useAppDispatch } from "../../hooks/redux";
 import { Link } from "react-router-dom";
 import { AxiosError, AxiosResponse } from "axios";
-import axios from "../api/axios";
+import axios from "../../api/axios";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { IUser } from "../models/user";
+import { IUser } from "../../models/user";
 import { toast } from "react-toastify";
 
 interface CustomJwtPayload extends JwtPayload {
@@ -20,7 +20,6 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
