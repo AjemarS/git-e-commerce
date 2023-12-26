@@ -13,21 +13,16 @@ import { login, logout, setUser } from "./store/reducers/UserSlice";
 import axios from "./api/axios";
 import { IUser } from "./models/user";
 import { AxiosResponse } from "axios";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setCount, setCurrentLink, setProducts } from "./store/reducers/ProductSlice";
 import { jwtDecode } from "jwt-decode";
-import useApiData from "./hooks/useApiData";
+import useApiProducts from "./hooks/useApiProducts";
 
 function App() {
   const dispatch = useAppDispatch();
 
-  const { data } = useApiData("products/");
-  dispatch(setProducts(data?.results));
-  dispatch(setCount(data?.count));
-  dispatch(setCurrentLink("products/"));
-
-  
+  useEffect(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
     const userId = localStorage.getItem("userId");
 
@@ -44,33 +39,42 @@ function App() {
     } else {
       dispatch(logout());
     }
-useEffect(() => {
-  const token = localStorage.getItem("refreshToken");
-  const decodedToken = token && jwtDecode(token);
 
-  if (decodedToken && decodedToken.exp! - Date.now() / 1000 < 60) {
-    axios
-      .post(
-        "token/refresh/",
-        {
-          refresh: token,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+    const token = localStorage.getItem("refreshToken");
+    const decodedToken = token && jwtDecode(token);
+
+    if (decodedToken && decodedToken.exp! - Date.now() / 1000 < 60) {
+      axios
+        .post(
+          "token/refresh/",
+          {
+            refresh: token,
           },
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        localStorage.setItem("accessToken", response.data.access);
-      })
-      .catch((error) => {
-        console.error("Помилка оновлення токену:", error);
-      });
-  }
-}, [dispatch]);
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("accessToken", response.data.access);
+        })
+        .catch((error) => {
+          console.error("Помилка оновлення токену:", error);
+        });
+    }
+  }, [dispatch]);
 
+  const { products, error } = useApiProducts("products/");
+
+  if (error) {
+    toast.error(error.message);
+  } else if (products) {
+    dispatch(setProducts(products.results));
+    dispatch(setCount(products.count));
+    dispatch(setCurrentLink("products/"));
+  }
   return (
     <div className="App">
       <Navbar />
@@ -79,13 +83,9 @@ useEffect(() => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/cart" element={<CartPage />} />
-          {/* <Route path="/liked" element={<LikedPage />} /> */}
-          {/* <Route path="/products/:id" element={<ProductPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/password_reset" element={<ResetPasswordPage />} />
-          {/* <Route path="/password_reset/confirm" element={<ResetPasswordConfirmPage />} /> */}
-          {/* <Route path="/user" element={<UserPage />} /> */}
         </Routes>
       </div>
       <Footer />
