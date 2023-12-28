@@ -8,9 +8,7 @@ from store.api.views import (
     LogoutView,
     PasswordResetView,
     ProductListView,
-    CategoriesListView,
-    ManufacturersListView,
-    PriceRangeView,
+    FiltersListView,
     CartAPI,
 )
 from store.api.urls import CustomRouter
@@ -55,19 +53,9 @@ urlpatterns = [
     ),
     path("products", ProductListView.as_view(), name="product_filtering"),
     path(
-        "products-data/categories/",
-        CategoriesListView.as_view(),
-        name="products_categories_list",
-    ),
-    path(
-        "products-data/manufacturers/",
-        ManufacturersListView.as_view(),
-        name="products_manufacturers_list",
-    ),
-    path(
-        "products-data/price-range/",
-        PriceRangeView.as_view(),
-        name="products_price_range",
+        "products-data/filters/",
+        FiltersListView.as_view(),
+        name="products_filters_list",
     ),
     path("cart/", CartAPI.as_view(), name="cart"),
     path("cart/<int:pk>/", CartItemDetailView.as_view(), name="cart-detail"),

@@ -6,6 +6,8 @@ import { useAppDispatch } from "../../../hooks/redux";
 import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
 import PriceRangeInput from "./PriceRangeInput";
 import ExpandIcon from "./ExpandIcon";
+import useApiFilters from "../../../hooks/useApiFilters";
+import { toast } from "react-toastify";
 
 type PriceRange = {
   maxPrice: number;
@@ -21,38 +23,18 @@ const Filters: React.FC = () => {
 
   const [priceRange, setPriceRange] = useState<PriceRange>({ minPrice: 0, maxPrice: 100000000 }); // maxPrice настільки великий, щоб
 
-  useLayoutEffect(() => {
-    const getFiltersData = () => {
-      axios
-        .get("products-data/categories/")
-        .then((response) => {
-          setCategories(response.data);
-        })
-        .catch((error) => {
-          console.error("Помилка отримання даних:", error);
-        });
+  const { filters, isLoading,  error } = useApiFilters("products-data/filters/");
 
-      axios
-        .get("products-data/manufacturers/")
-        .then((response) => {
-          setManufacturers(response.data);
-        })
-        .catch((error) => {
-          console.error("Помилка отримання даних:", error);
-        });
-
-      axios
-        .get("products-data/price-range/")
-        .then((response) => {
-          setPriceRange({ minPrice: response.data.minPrice, maxPrice: response.data.maxPrice });
-        })
-        .catch((error) => {
-          console.error("Помилка отримання даних:", error);
-        });
-    };
-
-    getFiltersData();
-  }, []);
+  if (error) {
+    toast.error(error.message);
+  } else if (filters) {
+    setCategories(filters.categories);
+    setManufacturers(filters.manufacturers);
+    setPriceRange({
+      minPrice: filters.price_range.minRange,
+      maxPrice: filters.price_range.maxRange,
+    });
+  }
 
   const [maxPrice, setMaxPrice] = useState<number>(priceRange.maxPrice);
   const [minPrice, setMinPrice] = useState<number>(priceRange.minPrice);

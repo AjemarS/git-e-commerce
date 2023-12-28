@@ -32,7 +32,6 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
 
 
-
 class ProductDetailView(APIView):
     def get_object(self, pk):
         try:
@@ -125,28 +124,26 @@ class ProductListView(generics.ListAPIView):
             return Response({"detail": "No matches found"})
 
 
-class CategoriesListView(APIView):
+class FiltersListView(APIView):
     def get(self, request, format=None):
         categories = list(Product.objects.values_list("category", flat=True).distinct())
-        return Response(categories)
 
-
-class ManufacturersListView(APIView):
-    def get(self, request, format=None):
         manufacturers = list(
             Product.objects.values_list("manufacturer", flat=True).distinct()
         )
-        return Response(manufacturers)
 
-
-class PriceRangeView(APIView):
-    def get(self, request, format=None):
         price_range = {
             "minPrice": Product.objects.aggregate(Min("price"))["price__min"],
             "maxPrice": Product.objects.aggregate(Max("price"))["price__max"],
         }
 
-        return Response(price_range)
+        return Response(
+            {
+                "categories": categories,
+                "manufacturers": manufacturers,
+                "price_range": price_range,
+            }
+        )
 
 
 CustomUser = get_user_model()
