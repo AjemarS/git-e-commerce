@@ -54,12 +54,39 @@ header {
 }
 
 .navbar__item--login-btn {
-  background-color: black;
-  color: white;
+  --navbar-login-btn-color: olive;
+  display: inline-block;
+  color: black;
   font-size: 24px;
+  border: 3px solid black;
   border-radius: 5px;
   padding: 5px;
   cursor: pointer;
+  position: relative;
+  isolation: isolate;
+}
+
+.navbar__item--login-btn::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  background: var(--navbar-login-btn-color);
+  inset: 0;
+  scale: 0 1;
+  transform-origin: right;
+  transition: scale 500ms;
+}
+
+.navbar__item--login-btn:hover::after,
+.navbar__item--login-btn:focus-visible::after {
+  transform-origin: left;
+  scale: 1 1;
+}
+
+.navbar__item--login-btn:hover,
+.navbar__item--login-btn:focus-visible {
+  color: white;
+  border-color: var(--navbar-login-btn-color);
 }
 
 .navbar__item__btns--cart,

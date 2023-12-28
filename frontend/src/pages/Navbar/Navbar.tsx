@@ -28,7 +28,7 @@ const Navbar = () => {
             <CartBox />
           ) : (
             <Link to={"/login"}>
-              <ShoppingCartOutlinedIcon fontSize="large" />
+              <ShoppingCartOutlinedIcon className="navbar__item--btns--cart" fontSize="large" />
             </Link>
           )}
 

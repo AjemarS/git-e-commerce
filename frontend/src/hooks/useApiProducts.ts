@@ -24,7 +24,7 @@ const useApiProducts = (url: string, params?: {}) => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response: AxiosResponse = await axios.get(url, params);
+        const response: AxiosResponse = await axios.get(url, { params: { params } });
         setProducts(response.data);
       } catch (err) {
         setError(

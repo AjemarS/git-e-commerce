@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./pages/Navbar/Navbar";
 import MainPage from "./pages/MainPage/MainPage";
 import CartPage from "./pages/CartPage/CartPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ResetPasswordPage from "./pages/ResetPassworPage";
-import Footer from "./pages/MainPage/Footer/Footer";
+import Footer from "./pages/Footer/Footer";
 import { useAppDispatch } from "./hooks/redux";
 import { login, logout, setUser } from "./store/reducers/UserSlice";
 import axios from "./api/axios";

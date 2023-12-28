@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import Logout from "../Logout";
+import Logout from "../../components/Logout";
 import { logout } from "../../store/reducers/UserSlice";
 import axios from "../../api/axios";
 import { toast } from "react-toastify";

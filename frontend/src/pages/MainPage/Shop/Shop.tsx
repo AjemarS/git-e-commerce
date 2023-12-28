@@ -9,6 +9,8 @@ import "./Shop.css";
 import axios from "../../../api/axios";
 import Pagination from "./CustomPagination/CustomPagination";
 import HoverableSelect from "./HoverableSelect/HoverableSelect";
+import useApiProducts from "../../../hooks/useApiProducts";
+import { toast } from "react-toastify";
 
 const Shop: React.FC = () => {
   const [isList, setIsList] = useState(false);
@@ -19,25 +21,21 @@ const Shop: React.FC = () => {
     { value: "price", placeholder: "Ascending price" },
     { value: "-price", placeholder: "Descending price" },
   ];
+  
   const { products } = useAppSelector((state) => state.product);
 
   const dispatch = useAppDispatch();
 
-  function handleClickBtn() {
-    setIsList(!isList);
-  }
-
   const sortProducts = (option: string) => {
-    axios
-      .get("products", { params: { ordering: option } })
-      .then((response) => {
-        dispatch(setProducts(response.data.results));
-        dispatch(setCurrentLink(`products?ordering=${option}`));
-        dispatch(setCount(response.data.count));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // const { products, error } = useApiProducts(`products?ordering=${option}`);
+
+    // if (error) {
+    //   toast.error(error.message);
+    // } else if (products) {
+    //   dispatch(setProducts(products.results));
+    //   dispatch(setCurrentLink(`products?ordering=${option}`));
+    //   dispatch(setCount(products.count));
+    // }
   };
 
   return (
@@ -50,13 +48,17 @@ const Shop: React.FC = () => {
         <div className="shop__options--change-mode">
           <button
             className={isList ? "shop__options__btns" : "shop__options__btns active"}
-            onClick={handleClickBtn}
+            onClick={() => {
+              setIsList(!isList);
+            }}
           >
             <img src="../assets/icons-small-icons.png" alt=" " />
           </button>
           <button
             className={isList ? "shop__options__btns active" : "shop__options__btns"}
-            onClick={handleClickBtn}
+            onClick={() => {
+              setIsList(!isList);
+            }}
           >
             <img src="../assets/icons-list.png" alt=" " />
           </button>
