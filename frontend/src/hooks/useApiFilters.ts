@@ -6,7 +6,7 @@ interface ApiFiltersResponse {
   data: {
     categories: string[];
     manufacturers: string[];
-    price_range: {
+    priceRange: {
       maxRange: number;
       minRange: number;
     };
@@ -16,8 +16,8 @@ interface ApiFiltersResponse {
   };
 }
 
-const useApiProducts = (url: string, params?: {}) => {
-  const [filters, setFilters] = useState<ApiFiltersResponse["data"] | null>(null);
+const useApiFilters = (url: string) => {
+  const [data, setData] = useState<ApiFiltersResponse["data"] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<ApiFiltersResponse["error"] | null>(null);
 
@@ -25,9 +25,8 @@ const useApiProducts = (url: string, params?: {}) => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response: AxiosResponse = await axios.get(url, { params: { params } });
-        setFilters(response.data);
-        console.log(response.data);
+        const response: AxiosResponse = await axios.get(url);
+        setData(response.data);
       } catch (err) {
         setError(
           (err as AxiosError<ApiFiltersResponse>).response?.data?.error || {
@@ -40,9 +39,9 @@ const useApiProducts = (url: string, params?: {}) => {
     };
 
     fetchData();
-  }, [url, params]);
+  }, [url]);
 
-  return { filters, isLoading, error };
+  return { data, isLoading, error };
 };
 
-export default useApiProducts;
+export default useApiFilters;

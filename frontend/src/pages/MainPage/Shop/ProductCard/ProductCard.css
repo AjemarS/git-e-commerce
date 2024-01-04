@@ -70,11 +70,11 @@
 
 .product__card__btn--buy:hover {
   background-color: white;
-  color: olive;
-  border: 2px olive solid;
+  color: black;
+  border: 2px black solid;
 }
 
-.product__card__btn--buy:hover:visited{
+.product__card__btn--buy:hover:visited {
   color: olive;
 }
 

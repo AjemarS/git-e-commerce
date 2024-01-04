@@ -16,7 +16,7 @@ interface ApiProductsResponse {
 }
 
 const useApiProducts = (url: string, params?: {}) => {
-  const [products, setProducts] = useState<ApiProductsResponse["data"] | null>(null);
+  const [data, setData] = useState<ApiProductsResponse["data"] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<ApiProductsResponse["error"] | null>(null);
 
@@ -25,7 +25,7 @@ const useApiProducts = (url: string, params?: {}) => {
       try {
         setIsLoading(true);
         const response: AxiosResponse = await axios.get(url, { params: { params } });
-        setProducts(response.data);
+        setData(response.data);
       } catch (err) {
         setError(
           (err as AxiosError<ApiProductsResponse>).response?.data?.error || {
@@ -40,7 +40,7 @@ const useApiProducts = (url: string, params?: {}) => {
     fetchData();
   }, [url, params]);
 
-  return { products, isLoading, error };
+  return { data, isLoading, error };
 };
 
 export default useApiProducts;

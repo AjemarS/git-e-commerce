@@ -18,6 +18,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { setCount, setCurrentLink, setProducts } from "./store/reducers/ProductSlice";
 import { jwtDecode } from "jwt-decode";
 import useApiProducts from "./hooks/useApiProducts";
+import useApiFilters from "./hooks/useApiFilters";
+import { setCategories, setManufacturers, setPriceRange } from "./store/reducers/FilterSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -66,15 +68,31 @@ function App() {
     }
   }, [dispatch]);
 
-  const { products, error } = useApiProducts("products/");
+  const products = useApiProducts("products/");
 
-  if (error) {
-    toast.error(error.message);
-  } else if (products) {
-    dispatch(setProducts(products.results));
-    dispatch(setCount(products.count));
+  if (products.error) {
+    toast.error(products.error.message);
+  } else if (products.data && !products.isLoading) {
+    dispatch(setProducts(products.data.results));
+    dispatch(setCount(products.data.count));
     dispatch(setCurrentLink("products/"));
   }
+
+  const filters = useApiFilters("products-data/filters/");
+
+  if (filters.error) {
+    toast.error(filters.error.message);
+  } else if (filters.data && !filters.isLoading) {
+    dispatch(setCategories(filters.data.categories));
+    dispatch(setManufacturers(filters.data.manufacturers));
+    dispatch(
+      setPriceRange({
+        minPrice: filters.data.priceRange.minRange,
+        maxPrice: filters.data.priceRange.maxRange,
+      })
+    );
+  }
+
   return (
     <div className="App">
       <Navbar />

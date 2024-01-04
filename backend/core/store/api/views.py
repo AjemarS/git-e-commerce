@@ -141,7 +141,7 @@ class FiltersListView(APIView):
             {
                 "categories": categories,
                 "manufacturers": manufacturers,
-                "price_range": price_range,
+                "priceRange": price_range,
             }
         )
 

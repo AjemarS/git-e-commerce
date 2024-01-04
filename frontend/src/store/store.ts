@@ -2,11 +2,13 @@ import { combineReducers, configureStore, ThunkAction, Action } from "@reduxjs/t
 import productReducer from "./reducers/ProductSlice";
 import userReducer from "./reducers/UserSlice";
 import cartReducer from "./reducers/CartSlice";
+import filterReducer from "./reducers/FilterSlice";
 
 const rootReducer = combineReducers({
   product: productReducer,
   auth: userReducer,
   cart: cartReducer,
+  filter: filterReducer,
 });
 
 export const setupStore = () => {
