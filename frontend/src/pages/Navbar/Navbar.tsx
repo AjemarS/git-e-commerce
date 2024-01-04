@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar/SearchBar";
 import { useAppSelector } from "../../hooks/redux";
 import UserBox from "./UserBox";
 import CartBox from "./CartBox";

@@ -65,7 +65,7 @@
   border-radius: 3px;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: all ease 0.3s;
+  transition: all ease 0.1s;
 }
 
 .product__card__btn--buy:hover {
@@ -81,7 +81,7 @@
 .product__card__btn--buy:active {
   background-color: white;
   color: olive;
-  border: 2px transparent solid;
+  border: 2px solid olive;
 }
 
 .product__card__btn--buy:visited {

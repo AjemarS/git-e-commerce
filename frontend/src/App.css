@@ -15,9 +15,11 @@ a:link {
   text-decoration: none;
   color: black;
 }
-a:visited{
+
+a:visited {
   color: black;
 }
+
 main {
   display: flex;
   flex-direction: row;
@@ -32,4 +34,21 @@ main {
   justify-content: center;
 }
 
-/* rgba(128, 128, 0, 0.2); */
+@media screen and (max-width: 1200px) {
+
+  .cards>div {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+
+  .content,
+  .shop {
+    max-width: 100%;
+  }
+
+  .content {
+    margin: 0;
+  }
+}

@@ -5,7 +5,7 @@ header {
   top: 0;
   background: white;
   flex-grow: 0;
-  z-index: 1;
+  z-index: 10;
 }
 
 .navbar__layout {
@@ -87,6 +87,12 @@ header {
 .navbar__item--login-btn:hover,
 .navbar__item--login-btn:focus-visible {
   color: white;
+  border-color: var(--navbar-login-btn-color);
+}
+
+.navbar__item--login-btn:active {
+  color: var(--navbar-login-btn-color);
+  background-color: white;
   border-color: var(--navbar-login-btn-color);
 }
 

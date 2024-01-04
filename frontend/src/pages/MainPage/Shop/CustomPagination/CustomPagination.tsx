@@ -33,7 +33,7 @@ const CustomPagination = (props: Props) => {
   }, [currentLink]);
 
   return (
-    <div className="pagination-layout">
+    <section className="pagination-layout">
       <Pagination
         className="pagination"
         count={count}
@@ -43,7 +43,7 @@ const CustomPagination = (props: Props) => {
         shape="rounded"
         onChange={handlePaginationChange}
       />
-    </div>
+    </section>
   );
 };
 

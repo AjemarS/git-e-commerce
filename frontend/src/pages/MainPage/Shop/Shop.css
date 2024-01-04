@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  width: 960px;
+  max-width: 960px;
 }
 
 .cards {
@@ -13,7 +13,7 @@
   max-width: 960px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .cards>div>a {
@@ -55,12 +55,33 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 2px;
-  padding: 5px;
+  border-right: 2px solid black;
+  padding: 5px 5px 1px 5px;
+  transition: all ease .3s;
+}
+
+.shop__options__btns:hover {
+  color: olive;
+  background-color: #eee;
 }
 
 .active {
   pointer-events: none;
+  color: olive;
+}
+
+.shop__options--change-mode {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.shop__options--sorting {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .shop__options--sorting select {
@@ -119,4 +140,10 @@
 
 .hoverable-select.open .options-list {
   display: block;
+}
+
+@media screen and (max-width: 1200px) {
+  .cards>div {
+    justify-content: center;
+  }
 }

@@ -1,38 +1,52 @@
 .hoverable-select {
     position: relative;
-    display: inline-block;
-    width: 150px;
+    display: flex;
+    justify-content: center;
 }
 
 .selected-option {
-    padding: 8px;
-    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 8px;
+    border: 2px solid black;
+    border-left: 3.5px solid black;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
+    z-index: 1;
 }
 
 .options-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    margin-top: -3px;
     position: absolute;
     top: 100%;
     left: 0;
-    width: calc(100% - 2px);
-    border: 1px solid #ccc;
-    border-top: none;
+    width: calc(100% - 3px);
+    border: 2px solid black;
+    border-top: 2px solid transparent;
+    border-radius: 5px;
+    font-size: 18px;
+    z-index: 0;
     display: none;
 }
 
 .options-list li {
-    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
     cursor: pointer;
     background-color: #fff;
+    border-radius: 5px;
 }
 
 .options-list li:hover {
-    background-color: olive;
-    color: white;
+    background-color: #eee;
+    color: olive;
 }
 
 .hoverable-select.open .options-list {

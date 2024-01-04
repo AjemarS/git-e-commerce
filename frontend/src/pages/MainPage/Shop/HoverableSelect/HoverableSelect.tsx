@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./HoverableSelect.css";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import SortIcon from "@mui/icons-material/Sort";
 
 type Option = {
   value: string;
@@ -28,6 +31,7 @@ const HoverableSelect: React.FC<HoverableSelectProps> = ({ options, handleClick 
       onMouseLeave={() => setIsOpen(false)}
     >
       <div className="selected-option" onClick={() => setIsOpen(!isOpen)}>
+        <SortIcon className="sort-icon" fontSize="large"/>
         {selectedOption}
       </div>
       {isOpen && (
@@ -35,6 +39,7 @@ const HoverableSelect: React.FC<HoverableSelectProps> = ({ options, handleClick 
           {options.map((option) => (
             <li key={option.placeholder} onClick={() => handleOptionClick(option)}>
               {option.placeholder}
+              {option.value.split("")[0] === "-" ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
             </li>
           ))}
         </ul>

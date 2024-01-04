@@ -36,12 +36,12 @@
   cursor: pointer;
   border-radius: 5px;
   border: 1px #fff solid;
-  padding: 10px 5px;
+  padding: 5px 10px;
   margin-bottom: 5px;
   transition: all ease .3s;
 }
 
-.filters__menu__title:active {
+.filters__menu__title:hover {
   background-color: #eee;
 }
 
@@ -78,3 +78,9 @@
   cursor: pointer;
   z-index: 10;
 }
+
+/* @media screen and (max-width: 1200px) {
+  .filters {
+    display: none;
+  }
+} */

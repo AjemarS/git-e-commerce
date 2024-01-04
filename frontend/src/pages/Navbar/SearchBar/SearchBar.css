@@ -6,33 +6,16 @@
   border: 1px solid black;
 }
 
-.searchBar button {
-  background-color: transparent;
-  border: none;
+.searchBar-btn {
   cursor: pointer;
-  padding: 0;
-  margin-left: 10px;
+  color: white;
+  background-color: black;
+  border-radius: 0px 4px 4px 0px;
+  padding-left: 5px;
 }
 
 .hidden {
   visibility: hidden;
-}
-
-.searchBar img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0 5px 5px 0;
-  border: 2px transparent solid;
-}
-
-.searchBar button:hover path {
-  fill: olive;
-}
-
-.searchBar img:active {
-  background-color: olive;
-  border: 2px olive solid;
 }
 
 .searchBar input {
@@ -45,7 +28,11 @@
 }
 
 .searchBar input::placeholder {
-  color: olive;
+  color: black;
   font-family: "Roboto", sans-serif;
   font-size: 18px;
+}
+
+.searchBar input:focus-visible::placeholder {
+  color: olive;
 }
