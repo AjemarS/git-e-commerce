@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./pages/Navbar/Navbar";
 import MainPage from "./pages/MainPage/MainPage";
 import CartPage from "./pages/CartPage/CartPage";
@@ -25,10 +25,11 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // Перевіряємо чи залогінений користувач (не вийшов час токену), якщо так, то логінимо, інакше логаутимо
     const storedAuth = localStorage.getItem("isAuthenticated");
     const userId = localStorage.getItem("userId");
 
-    if (storedAuth === "true") {
+    if (storedAuth === "true" && userId) {
       dispatch(login());
       axios
         .get<IUser>(`users/public/${userId}`)
@@ -42,6 +43,7 @@ function App() {
       dispatch(logout());
     }
 
+    // Перевіряємо чи не закінчився час в refresh токені, якщо так, то відправляємо токен на оновлення
     const token = localStorage.getItem("refreshToken");
     const decodedToken = token && jwtDecode(token);
 
@@ -68,6 +70,7 @@ function App() {
     }
   }, [dispatch]);
 
+  // Отримуємо список продуктів при вході на головну сторінку
   const products = useApiProducts("products/");
 
   if (products.error) {
@@ -78,6 +81,7 @@ function App() {
     dispatch(setCurrentLink("products/"));
   }
 
+  // Отримуємо фільтри продуктів при вході на головну сторінку
   const filters = useApiFilters("products-data/filters/");
 
   if (filters.error) {
@@ -99,11 +103,13 @@ function App() {
       <ToastContainer autoClose={1500} closeOnClick theme="dark" />
       <div className="content">
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/home" element={<MainPage />} />
+          <Route path="/home/cart" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/password_reset" element={<ResetPasswordPage />} />
+
+          <Route path="*" element={<Navigate to={"/home"} />} />
         </Routes>
       </div>
       <Footer />
