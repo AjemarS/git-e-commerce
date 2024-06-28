@@ -7,6 +7,7 @@ interface ProductState {
     minPrice: number;
     maxPrice: number;
   };
+  selectedFilters: string[];
 }
 
 const initialState: ProductState = {
@@ -16,6 +17,7 @@ const initialState: ProductState = {
     minPrice: 0,
     maxPrice: 100000,
   },
+  selectedFilters: [],
 };
 
 export const FilterSlice = createSlice({
@@ -31,8 +33,13 @@ export const FilterSlice = createSlice({
     setPriceRange: (state, action: PayloadAction<{ minPrice: number; maxPrice: number }>) => {
       state.priceRange = action.payload;
     },
+    selectFilter: (state, action: PayloadAction<string>) => {
+      state.selectedFilters = state.selectedFilters.includes(action.payload)
+        ? state.selectedFilters.filter((selectedFilter) => selectedFilter !== action.payload)
+        : [...state.selectedFilters, action.payload];
+    },
   },
 });
 
-export const { setCategories, setManufacturers, setPriceRange } = FilterSlice.actions;
+export const { setCategories, setManufacturers, setPriceRange, selectFilter } = FilterSlice.actions;
 export default FilterSlice.reducer;

@@ -3,41 +3,41 @@ import { IProduct } from "../../../models/product";
 import RenderComponent from "../../../components/RenderComponent";
 import ProductCard from "./ProductCard/ProductCard";
 import ProductList from "./ProductList/ProductList";
-import { useAppSelector } from "../../../hooks/redux";
-// import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import "./Shop.css";
-// import axios from "../../../api/axios";
+import axios from "../../../api/axios";
 import Pagination from "./CustomPagination/CustomPagination";
 import HoverableSelect from "./HoverableSelect/HoverableSelect";
-// import useApiProducts from "../../../hooks/useApiProducts";
-// import { toast } from "react-toastify";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import AppsIcon from "@mui/icons-material/Apps";
+import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
 
 const Shop: React.FC = () => {
   const [isList, setIsList] = useState(false);
 
+  // Варто спочатку писати дані, де placeholder - найдовше слово
   const OPTIONS = [
     { value: "name", placeholder: "Name" },
     { value: "-name", placeholder: "Name" },
     { value: "price", placeholder: "Price" },
     { value: "-price", placeholder: "Price" },
-    { value: "", placeholder: "Some Very Big Word" },
   ];
 
   const { products } = useAppSelector((state) => state.product);
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const sortProducts = (option: string) => {
-    // const { products, error } = useApiProducts(`products?ordering=${option}`);
-    // if (error) {
-    //   toast.error(error.message);
-    // } else if (products) {
-    //   dispatch(setProducts(products.results));
-    //   dispatch(setCurrentLink(`products?ordering=${option}`));
-    //   dispatch(setCount(products.count));
-    // }
+    axios
+      .get("products", { params: { ordering: option } })
+      .then((response) => {
+        dispatch(setProducts(response.data.results));
+        dispatch(setCurrentLink(`products?ordering=${option}`));
+        dispatch(setCount(response.data.count));
+      })
+      .catch((error) => {
+        console.error("Помилка отримання даних:", error);
+      });
   };
 
   return (

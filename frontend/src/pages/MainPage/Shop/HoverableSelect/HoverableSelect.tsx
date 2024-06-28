@@ -37,7 +37,7 @@ const HoverableSelect: React.FC<HoverableSelectProps> = ({ options, handleClick 
       {isOpen && (
         <ul className="options-list">
           {options.map((option) => (
-            <li key={option.placeholder} onClick={() => handleOptionClick(option)}>
+            <li key={option.value} onClick={() => handleOptionClick(option)}>
               {option.placeholder}
               {option.value.split("")[0] === "-" ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
             </li>

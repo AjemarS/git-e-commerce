@@ -3,12 +3,11 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .content {
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-grow: 1;
+  width: 100%;
 }
 
 a:link {
@@ -23,8 +22,8 @@ a:visited {
 main {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
   width: 100%;
-  margin-top: 40px;
 }
 
 .error {

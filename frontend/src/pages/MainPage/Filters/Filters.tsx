@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Filters.css";
 import axios from "../../../api/axios";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
@@ -15,7 +15,7 @@ const Filters: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { categories, manufacturers, priceRange } = useAppSelector((state) => state.filter);
+  const { categories, manufacturers, priceRange, selectedFilters } = useAppSelector((state) => state.filter);
 
   const [maxPrice, setMaxPrice] = useState<number>(priceRange.maxPrice);
   const [minPrice, setMinPrice] = useState<number>(priceRange.minPrice);
@@ -28,6 +28,9 @@ const Filters: React.FC = () => {
 
     return queryString;
   };
+  useEffect(() => {
+    console.log(selectedCategories, selectedManufacturers);
+  }, [selectedCategories, selectedManufacturers]);
 
   const handleCategoryChange = (selected: string[]) => {
     setSelectedCategories(selected);
@@ -70,14 +73,12 @@ const Filters: React.FC = () => {
       <div className="filters__layout">
         <FiltersItem
           title="Categories"
-          filters={categories}
-          handleFilterChange={handleCategoryChange}
+          filters={categories} 
           handleApplyFilters={handleApplyFilters}
         />
         <FiltersItem
           title="Manufacturers"
           filters={manufacturers}
-          handleFilterChange={handleManufacturerChange}
           handleApplyFilters={handleApplyFilters}
         />
 

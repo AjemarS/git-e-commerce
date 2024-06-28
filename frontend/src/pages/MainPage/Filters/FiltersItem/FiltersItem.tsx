@@ -1,43 +1,37 @@
 import React, { useState, useEffect } from "react";
 import ExpandIcon from "../ExpandIcon";
 import RenderComponent from "../../../../components/RenderComponent";
+import { useAppDispatch } from "../../../../hooks/redux";
+import { selectFilter } from "../../../../store/reducers/FilterSlice";
 
 type FiltersItemProps = {
   title: string;
   filters: string[];
-  handleFilterChange: (selected: string[]) => void;
   handleApplyFilters: () => void;
 };
 
 const FiltersItem = ({
   title,
   filters,
-  handleFilterChange,
   handleApplyFilters,
 }: FiltersItemProps) => {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState<boolean>(true);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [isApplyButtonActive, setIsApplyButtonActive] = useState(false);
 
+  const dispatch = useAppDispatch()
+
   //Оновлення стану isApplyButtonActive при зміні вибраних фільтрів
   useEffect(() => {
     setIsApplyButtonActive(selectedFilters.length > 0);
   }, [selectedFilters]);
 
-  const selectFilter = (filter: string) => {
-    const newSelectedFilters = selectedFilters.includes(filter)
-      ? selectedFilters.filter((selectedFilter) => selectedFilter !== filter)
-      : [...selectedFilters, filter];
-
-    setSelectedFilters(newSelectedFilters);
+  const onFilterSelect = (filter: string) => {
+    dispatch(selectFilter(filter))
   };
 
   const clearAllFilters = () => {
     setSelectedFilters([]);
-  };
-
-  const handleCheckboxChange = () => {
-    handleFilterChange([...new Set(selectedFilters)]);
   };
 
   return (
@@ -67,13 +61,12 @@ const FiltersItem = ({
               key={filter}
               className="filters__menu__checkboxes--label"
               style={isFilterMenuOpen ? { display: "block" } : { display: "none" }}
-              onClick={() => selectFilter(filter)}
+              onClick={() => onFilterSelect(filter)}
             >
               <input
                 className="filters__menu__checkboxes--input"
                 type="checkbox"
-                checked={selectedFilters.includes(filter)}
-                onChange={handleCheckboxChange}
+                // onChange={handleCheckboxChange}
               />
               {filter}
             </label>
