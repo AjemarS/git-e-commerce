@@ -1,44 +1,62 @@
-import { useState } from "react";
-import { IProduct } from "../../../models/product";
+import { useEffect, useState } from "react";
 import RenderComponent from "../../../components/RenderComponent";
 import ProductCard from "./ProductCard/ProductCard";
 import ProductList from "./ProductList/ProductList";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch } from "../../../hooks/redux";
 import "./Shop.css";
 import axios from "../../../api/axios";
 import Pagination from "./CustomPagination/CustomPagination";
 import HoverableSelect from "./HoverableSelect/HoverableSelect";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import AppsIcon from "@mui/icons-material/Apps";
-import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
+import { setCount, setCurrentLink } from "../../../store/reducers/ProductSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { IProduct } from "../../../models/product";
 
-const Shop: React.FC = () => {
+// Можна підвантажувати з сервера, але це дефолтні параметри сортування, тому потреби в кастомних немає
+// Варто спочатку писати дані, де placeholder - найдовше слово (за довжиною в пікселях, а не буквах)
+const OPTIONS = [
+  { value: "name", placeholder: "Name" },
+  { value: "-name", placeholder: "Name" },
+  { value: "price", placeholder: "Price" },
+  { value: "-price", placeholder: "Price" },
+];
+
+interface ShopProps {
+  query: string | null;
+}
+
+const Shop: React.FC<ShopProps> = ({ query }) => {
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [isList, setIsList] = useState(false);
-
-  // Варто спочатку писати дані, де placeholder - найдовше слово
-  const OPTIONS = [
-    { value: "name", placeholder: "Name" },
-    { value: "-name", placeholder: "Name" },
-    { value: "price", placeholder: "Price" },
-    { value: "-price", placeholder: "Price" },
-  ];
-
-  const { products } = useAppSelector((state) => state.product);
 
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const sortProducts = (option: string) => {
+    // Перевіряємо чи пустий рядок запиту і додаємо до вже існуючого запиту або створюємо новий
+    // Костиль, тому що при декількох натискань рядок запиту заповнюється ordering'ами
+    query === (null || "")
+      ? navigate(location.pathname + "?ordering=" + option)
+      : navigate(location.pathname + "?" + query + "&ordering=" + option);
+  };
+
+  // З кожною зміною запиту отримуємо відповідний список продуктів
+  // Не використовуємо dispatch, тому що потрібна синхронність
+  useEffect(() => {
     axios
-      .get("products", { params: { ordering: option } })
+      .get(`products?${query}`)
       .then((response) => {
-        dispatch(setProducts(response.data.results));
-        dispatch(setCurrentLink(`products?ordering=${option}`));
+        setProducts(response.data.results);
+        dispatch(setCurrentLink(`products?${query}`));
         dispatch(setCount(response.data.count));
       })
       .catch((error) => {
         console.error("Помилка отримання даних:", error);
       });
-  };
+  }, [dispatch, query]);
 
   return (
     <article className="shop">
@@ -74,16 +92,20 @@ const Shop: React.FC = () => {
             <span>Price</span>
           </section>
         )}
-        <RenderComponent
-          items={products}
-          renderItem={(product: IProduct) =>
-            isList ? (
-              <ProductList key={product.id} product={product} />
-            ) : (
-              <ProductCard key={product.id} product={product} />
-            )
-          }
-        />
+        {products.length !== 0 ? (
+          <RenderComponent
+            items={products}
+            renderItem={(product) =>
+              isList ? (
+                <ProductList key={product.id} product={product} />
+              ) : (
+                <ProductCard key={product.id} product={product} />
+              )
+            }
+          />
+        ) : (
+          <div>Products undefined</div>
+        )}
         <Pagination />
       </section>
     </article>

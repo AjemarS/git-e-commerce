@@ -50,7 +50,7 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
       <input
         type="number"
         id="priceMinInput"
-        min={minPriceRange}
+        min={minPrice}
         max={maxPrice}
         value={minPrice}
         onChange={handleMinPrice}
@@ -59,7 +59,7 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
         type="number"
         id="priceMaxInput"
         min={minPrice}
-        max={maxPriceRange}
+        max={maxPrice}
         value={maxPrice}
         onChange={handleMaxPrice}
       />

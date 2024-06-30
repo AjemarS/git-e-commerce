@@ -1,48 +1,50 @@
 import React, { useState, useEffect } from "react";
 import ExpandIcon from "../ExpandIcon";
 import RenderComponent from "../../../../components/RenderComponent";
-import { useAppDispatch } from "../../../../hooks/redux";
-import { selectFilter } from "../../../../store/reducers/FilterSlice";
 
 type FiltersItemProps = {
   title: string;
   filters: string[];
   handleApplyFilters: () => void;
+  handleFilterChange: (selected: string[]) => void;
 };
 
 const FiltersItem = ({
   title,
   filters,
   handleApplyFilters,
+  handleFilterChange,
 }: FiltersItemProps) => {
-  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState<boolean>(true);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(true);
   const [isApplyButtonActive, setIsApplyButtonActive] = useState(false);
 
-  const dispatch = useAppDispatch()
-
-  //Оновлення стану isApplyButtonActive при зміні вибраних фільтрів
+  // При новому фільтрі в масиві, використовуємо батьківську функцію для передачі наверх масиву фільтру
   useEffect(() => {
+    handleFilterChange(selectedFilters);
     setIsApplyButtonActive(selectedFilters.length > 0);
-  }, [selectedFilters]);
+  }, [handleFilterChange, selectedFilters]);
 
-  const onFilterSelect = (filter: string) => {
-    dispatch(selectFilter(filter))
-  };
-
-  const clearAllFilters = () => {
-    setSelectedFilters([]);
+  const handleInputChange = (filter: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    // Залежно від натиснутого чекбоксу додаємо або видаляємо новий фільтр і робимо кнопку активною
+    if (e.target.checked) {
+      setSelectedFilters((filters) => [...new Set([...filters, filter])]);
+      setIsApplyButtonActive(e.target.checked);
+    } else {
+      setSelectedFilters((filters) => filters.filter((f) => f !== filter));
+    }
   };
 
   return (
     <div className="filters__menu">
       {isApplyButtonActive && (
-        <div className="filters__clear--btn" onClick={clearAllFilters}>
-          Clear all
-        </div>
-      )}
-      {isApplyButtonActive && (
-        <button className="filters__apply__btn" onClick={handleApplyFilters}>
+        <button
+          className="filters__apply__btn"
+          onClick={() => {
+            handleApplyFilters();
+          }}
+        >
           Apply Filters
         </button>
       )}
@@ -61,12 +63,11 @@ const FiltersItem = ({
               key={filter}
               className="filters__menu__checkboxes--label"
               style={isFilterMenuOpen ? { display: "block" } : { display: "none" }}
-              onClick={() => onFilterSelect(filter)}
             >
               <input
                 className="filters__menu__checkboxes--input"
                 type="checkbox"
-                // onChange={handleCheckboxChange}
+                onChange={(e) => handleInputChange(filter, e)}
               />
               {filter}
             </label>

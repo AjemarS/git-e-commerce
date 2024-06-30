@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Filters.css";
-import axios from "../../../api/axios";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { setCount, setCurrentLink, setProducts } from "../../../store/reducers/ProductSlice";
+import { useAppSelector } from "../../../hooks/redux";
 import PriceRangeInput from "./PriceRangeInput";
 import ExpandIcon from "./ExpandIcon";
 import FiltersItem from "./FiltersItem/FiltersItem";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Filters: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -13,24 +12,19 @@ const Filters: React.FC = () => {
 
   const [isPriceFilterOpen, setIsPriceFilterOpen] = useState(true);
 
-  const dispatch = useAppDispatch();
-
-  const { categories, manufacturers, priceRange, selectedFilters } = useAppSelector((state) => state.filter);
+  const { categories, manufacturers, priceRange } = useAppSelector((state) => state.filter);
+  console.log(categories, manufacturers, priceRange);
 
   const [maxPrice, setMaxPrice] = useState<number>(priceRange.maxPrice);
   const [minPrice, setMinPrice] = useState<number>(priceRange.minPrice);
 
   const buildQueryString = (filters: { [key: string]: string[] }): string => {
-    const queryString =
+    return (
       Object.entries(filters)
         .map(([key, values]) => `${key}=${values.join(",")}`)
-        .join("&") + `&price=${minPrice},${maxPrice}`;
-
-    return queryString;
+        .join("&") + `&price=${minPrice},${maxPrice}`
+    );
   };
-  useEffect(() => {
-    console.log(selectedCategories, selectedManufacturers);
-  }, [selectedCategories, selectedManufacturers]);
 
   const handleCategoryChange = (selected: string[]) => {
     setSelectedCategories(selected);
@@ -48,6 +42,9 @@ const Filters: React.FC = () => {
     setMaxPrice(maxPrice);
   };
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleApplyFilters = () => {
     const filters = {
       category: selectedCategories,
@@ -56,16 +53,7 @@ const Filters: React.FC = () => {
 
     const queryString = buildQueryString(filters);
 
-    axios
-      .get(`/products?${queryString}`)
-      .then((response) => {
-        dispatch(setProducts(response.data.results));
-        dispatch(setCurrentLink(`/products?${queryString}`));
-        dispatch(setCount(response.data.count));
-      })
-      .catch((error) => {
-        console.error("Filtering products error:", error);
-      });
+    navigate(location.pathname + "?" + queryString, { replace: true });
   };
 
   return (
@@ -73,13 +61,15 @@ const Filters: React.FC = () => {
       <div className="filters__layout">
         <FiltersItem
           title="Categories"
-          filters={categories} 
+          filters={categories}
           handleApplyFilters={handleApplyFilters}
+          handleFilterChange={handleCategoryChange}
         />
         <FiltersItem
           title="Manufacturers"
           filters={manufacturers}
           handleApplyFilters={handleApplyFilters}
+          handleFilterChange={handleManufacturerChange}
         />
 
         <div className="filters__menu">
@@ -97,12 +87,14 @@ const Filters: React.FC = () => {
             className="filters__menu__price"
             style={isPriceFilterOpen ? { display: "block" } : { display: "none" }}
           >
-            <PriceRangeInput
-              maxPriceRange={priceRange.maxPrice}
-              minPriceRange={priceRange.minPrice}
-              onMaxPriceChange={handleMaxPriceChange}
-              onMinPriceChange={handleMinPriceChange}
-            />
+            {priceRange && (
+              <PriceRangeInput
+                maxPriceRange={priceRange.maxPrice}
+                minPriceRange={priceRange.minPrice}
+                onMaxPriceChange={handleMaxPriceChange}
+                onMinPriceChange={handleMinPriceChange}
+              />
+            )}
           </div>
         </div>
       </div>
