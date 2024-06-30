@@ -13,7 +13,6 @@ const Filters: React.FC = () => {
   const [isPriceFilterOpen, setIsPriceFilterOpen] = useState(true);
 
   const { categories, manufacturers, priceRange } = useAppSelector((state) => state.filter);
-  console.log(categories, manufacturers, priceRange);
 
   const [maxPrice, setMaxPrice] = useState<number>(priceRange.maxPrice);
   const [minPrice, setMinPrice] = useState<number>(priceRange.minPrice);

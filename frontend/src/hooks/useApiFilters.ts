@@ -7,8 +7,8 @@ interface ApiFiltersResponse {
     categories: string[];
     manufacturers: string[];
     priceRange: {
-      maxRange: number;
-      minRange: number;
+      maxPrice: number;
+      minPrice: number;
     };
   };
   error?: {

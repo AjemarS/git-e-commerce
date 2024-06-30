@@ -91,8 +91,8 @@ function App() {
     dispatch(setManufacturers(filters.data.manufacturers));
     dispatch(
       setPriceRange({
-        minPrice: filters.data.priceRange.minRange,
-        maxPrice: filters.data.priceRange.maxRange,
+        minPrice: filters.data.priceRange.minPrice,
+        maxPrice: filters.data.priceRange.maxPrice,
       })
     );
   }
