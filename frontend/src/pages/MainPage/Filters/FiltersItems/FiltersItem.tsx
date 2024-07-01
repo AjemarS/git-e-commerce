@@ -5,32 +5,31 @@ import RenderComponent from "../../../../components/RenderComponent";
 type FiltersItemProps = {
   title: string;
   filters: string[];
-  handleApplyFilters: () => void;
-  handleFilterChange: (selected: string[]) => void;
+  onFilterChange: (selected: string[]) => void;
+  onFocus: (id: string) => void;
+  onBlur: () => void;
 };
 
-const FiltersItem = ({
-  title,
-  filters,
-  handleApplyFilters,
-  handleFilterChange,
-}: FiltersItemProps) => {
+const FiltersItem = ({ title, filters, onFilterChange, onFocus, onBlur }: FiltersItemProps) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(true);
-  const [isApplyButtonActive, setIsApplyButtonActive] = useState(false);
+
+  const handleFocus = () => {
+    onFocus(title);
+  };
+
+  const handleBlur = () => onBlur();
 
   // При новому фільтрі в масиві, використовуємо батьківську функцію для передачі наверх масиву фільтру
   useEffect(() => {
-    handleFilterChange(selectedFilters);
-    setIsApplyButtonActive(selectedFilters.length > 0);
-  }, [handleFilterChange, selectedFilters]);
+    onFilterChange(selectedFilters);
+  }, [onFilterChange, selectedFilters]);
 
   const handleInputChange = (filter: string, e: React.ChangeEvent<HTMLInputElement>) => {
     // Залежно від натиснутого чекбоксу додаємо або видаляємо новий фільтр і робимо кнопку активною
     if (e.target.checked) {
       setSelectedFilters((filters) => [...new Set([...filters, filter])]);
-      setIsApplyButtonActive(e.target.checked);
     } else {
       setSelectedFilters((filters) => filters.filter((f) => f !== filter));
     }
@@ -38,17 +37,11 @@ const FiltersItem = ({
 
   return (
     <div className="filters__menu">
-      {isApplyButtonActive && (
-        <button
-          className="filters__apply__btn"
-          onClick={() => {
-            handleApplyFilters();
-          }}
-        >
-          Apply Filters
-        </button>
-      )}
-      <div className="filters__menu__title" onClick={() => setIsFilterMenuOpen(!isFilterMenuOpen)}>
+      <div
+        className="filters__menu__title"
+        id={title}
+        onClick={() => setIsFilterMenuOpen(!isFilterMenuOpen)}
+      >
         {title}
         <ExpandIcon
           expanded={isFilterMenuOpen}
@@ -68,6 +61,8 @@ const FiltersItem = ({
                 className="filters__menu__checkboxes--input"
                 type="checkbox"
                 onChange={(e) => handleInputChange(filter, e)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               />
               {filter}
             </label>

@@ -1,28 +1,30 @@
 import React, { useState } from "react";
 import "./Filters.css";
 import { useAppSelector } from "../../../hooks/redux";
-import PriceRangeInput from "./PriceRangeInput";
-import ExpandIcon from "./ExpandIcon";
-import FiltersItem from "./FiltersItem/FiltersItem";
+import PriceRangeInput from "./FiltersItems/PriceRangeInput";
+import FiltersItem from "./FiltersItems/FiltersItem";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Filters: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedManufacturers, setSelectedManufacturers] = useState<string[]>([]);
+  const [selectedPrice, setSelectedPrice] = useState<number[]>([]);
 
-  const [isPriceFilterOpen, setIsPriceFilterOpen] = useState(true);
+  const [applyButtonPosition, setApplyButtonPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
-  const { categories, manufacturers, priceRange } = useAppSelector((state) => state.filter);
+  const { categories, manufacturers } = useAppSelector((state) => state.filter);
 
-  const [maxPrice, setMaxPrice] = useState<number>(priceRange.maxPrice);
-  const [minPrice, setMinPrice] = useState<number>(priceRange.minPrice);
-
-  const buildQueryString = (filters: { [key: string]: string[] }): string => {
-    return (
-      Object.entries(filters)
-        .map(([key, values]) => `${key}=${values.join(",")}`)
-        .join("&") + `&price=${minPrice},${maxPrice}`
-    );
+  // Функція для побудови рядка запиту з вибраних фільтрів
+  // Спочатку розділяємо на ключ - значення, якщо значень більше ніж 1, то розділяємо комою
+  // Але якщо значень немає, то спочатку додаємо пустий ключ, а потім його видаляємо
+  const buildQueryString = (filters: { [key: string]: string[] | number[] }): string => {
+    return Object.entries(filters)
+      .map(([key, values]) => (values.length !== 0 ? `${key}=${values.join(",")}` : null))
+      .filter((key) => key !== null)
+      .join("&");
   };
 
   const handleCategoryChange = (selected: string[]) => {
@@ -33,12 +35,8 @@ const Filters: React.FC = () => {
     setSelectedManufacturers(selected);
   };
 
-  const handleMinPriceChange = (minPrice: number) => {
-    setMinPrice(minPrice);
-  };
-
-  const handleMaxPriceChange = (maxPrice: number) => {
-    setMaxPrice(maxPrice);
+  const handlePriceChange = (selected: number[]) => {
+    setSelectedPrice(selected);
   };
 
   const navigate = useNavigate();
@@ -48,6 +46,7 @@ const Filters: React.FC = () => {
     const filters = {
       category: selectedCategories,
       manufacturer: selectedManufacturers,
+      price: selectedPrice,
     };
 
     const queryString = buildQueryString(filters);
@@ -55,47 +54,54 @@ const Filters: React.FC = () => {
     navigate(location.pathname + "?" + queryString, { replace: true });
   };
 
+  const handleFocus = (id: string) => {
+    const input = document.getElementById(id);
+    const rect = input && input.getBoundingClientRect();
+    rect && setApplyButtonPosition({ top: rect.top + window.scrollY + 9, left: rect.right + 10 });
+  };
+
+  const handleBlur = () => {
+    setApplyButtonPosition(null);
+  };
+
   return (
     <aside className="filters">
       <div className="filters__layout">
+        {applyButtonPosition && (
+          <div className="overlay">
+            <button
+              className="filters__apply__btn"
+              onClick={handleApplyFilters}
+              style={{
+                position: "absolute",
+                top: `${applyButtonPosition.top}px`,
+                left: `${applyButtonPosition.left}px`,
+              }}
+            >
+              Apply Filters
+            </button>
+          </div>
+        )}
         <FiltersItem
           title="Categories"
           filters={categories}
-          handleApplyFilters={handleApplyFilters}
-          handleFilterChange={handleCategoryChange}
+          onFilterChange={handleCategoryChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
         <FiltersItem
           title="Manufacturers"
           filters={manufacturers}
-          handleApplyFilters={handleApplyFilters}
-          handleFilterChange={handleManufacturerChange}
+          onFilterChange={handleManufacturerChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
-
-        <div className="filters__menu">
-          <div
-            className="filters__menu__title"
-            onClick={() => setIsPriceFilterOpen(!isPriceFilterOpen)}
-          >
-            Price
-            <ExpandIcon
-              expanded={isPriceFilterOpen}
-              onClick={() => setIsPriceFilterOpen(!isPriceFilterOpen)}
-            />
-          </div>
-          <div
-            className="filters__menu__price"
-            style={isPriceFilterOpen ? { display: "block" } : { display: "none" }}
-          >
-            {priceRange && (
-              <PriceRangeInput
-                maxPriceRange={priceRange.maxPrice}
-                minPriceRange={priceRange.minPrice}
-                onMaxPriceChange={handleMaxPriceChange}
-                onMinPriceChange={handleMinPriceChange}
-              />
-            )}
-          </div>
-        </div>
+        <PriceRangeInput
+          title="Price"
+          onFilterChange={handlePriceChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
       </div>
     </aside>
   );
