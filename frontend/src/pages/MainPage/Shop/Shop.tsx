@@ -36,11 +36,9 @@ const Shop: React.FC<ShopProps> = ({ query }) => {
   const location = useLocation();
 
   const sortProducts = (option: string) => {
-    // Перевіряємо чи пустий рядок запиту і додаємо до вже існуючого запиту або створюємо новий
-    // Костиль, тому що при декількох натискань рядок запиту заповнюється ordering'ами
-    query === (null || "")
-      ? navigate(location.pathname + "?ordering=" + option)
-      : navigate(location.pathname + "?" + query + "&ordering=" + option);
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("ordering", option);
+    navigate(`${location.pathname}?${searchParams.toString()}`);
   };
 
   // З кожною зміною запиту отримуємо відповідний список продуктів
