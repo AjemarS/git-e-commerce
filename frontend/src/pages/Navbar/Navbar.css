@@ -133,3 +133,9 @@ header {
   border: 1px dotted olive;
   box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.2);
 }
+
+@media screen and (max-width: 640px) {
+  .navbar__item--search {
+    display: none;
+  }
+}

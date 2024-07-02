@@ -111,3 +111,11 @@
 .product__card__btn--like:hover>.product__card__btn--like img {
   background-color: olive;
 }
+
+@media (max-width: 495px) {
+  .product__card {
+    width: 300px;
+    height: 450px;
+    font-size: 18px;
+  }
+}

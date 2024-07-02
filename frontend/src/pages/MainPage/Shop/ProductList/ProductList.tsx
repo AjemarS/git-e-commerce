@@ -5,23 +5,19 @@ import "./ProductList.css";
 
 const ProductList: FC<ProductProps> = ({ product }) => {
   return (
-    <Link to={`/products/${product.id}`}>
-      <div className="product__list">
-        <div className="product__list--image">
-          <img src={product.image} alt={product.name} />
-        </div>
-
-        <div className="product__list--text">
-          <div className="product__list--title">{product.name}</div>
-          <div className="product__list--description">{product.description}</div>
-          <div className="product__list--price">{product.price}$</div>
-        </div>
-
-        <div className="product__list--options">
-          <button className="product__list--btn">Buy</button>
-        </div>
-      </div>
-    </Link>
+    <tr>
+      <td>
+        <Link to={`/products/${product.id}`}>
+          <img src={product.image} alt={product.name} />{" "}
+        </Link>
+      </td>
+      <td>{product.name}</td>
+      <td>{product.description}</td>
+      <td>{product.price}$</td>
+      <td>
+        <button className="product__table--btn">Buy</button>
+      </td>
+    </tr>
   );
 };
 

@@ -71,43 +71,54 @@ const Shop: React.FC<ShopProps> = ({ query }) => {
               setIsList(!isList);
             }}
           >
-            <AppsIcon className="shop__options__btns--tiles" fontSize="large" />
+            <AppsIcon className="shop__options__btns--tiles" fontSize="medium" />
           </button>
-          <button
-            className={isList ? "shop__options__btns active" : "shop__options__btns"}
-            onClick={() => {
-              setIsList(!isList);
-            }}
-          >
-            <ViewListIcon className="shop__options__btns--list" fontSize="large" />
-          </button>
+          {window.innerWidth > 576 && (
+            <button
+              className={isList ? "shop__options__btns active" : "shop__options__btns"}
+              onClick={() => {
+                setIsList(!isList);
+              }}
+            >
+              <ViewListIcon className="shop__options__btns--list" fontSize="medium" />
+            </button>
+          )}
         </div>
       </section>
-      <section className={isList ? "list" : "cards"}>
-        {isList && (
-          <section className="list-labels">
-            <span>Image</span>
-            <span>Name</span>
-            <span>Description</span>
-            <span>Price</span>
-          </section>
-        )}
-        {products.length !== 0 ? (
-          <RenderComponent
-            items={products}
-            renderItem={(product) =>
-              isList ? (
-                <ProductList key={product.id} product={product} />
+      {isList && window.visualViewport!.width > 576 ? (
+        <section className="table">
+          <table className="product__table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.length !== 0 ? (
+                products.map((product) => <ProductList product={product} />)
               ) : (
-                <ProductCard key={product.id} product={product} />
-              )
-            }
-          />
-        ) : (
-          <div>Products undefined</div>
-        )}
-        <Pagination />
-      </section>
+                <div>Products undefined</div>
+              )}
+            </tbody>
+          </table>
+          <Pagination />
+        </section>
+      ) : (
+        <section className="cards">
+          {products.length !== 0 ? (
+            <RenderComponent
+              items={products}
+              renderItem={(product) => <ProductCard key={product.id} product={product} />}
+            />
+          ) : (
+            <div>Products undefined</div>
+          )}
+        </section>
+      )}
     </article>
   );
 };

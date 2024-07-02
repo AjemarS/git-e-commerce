@@ -21,25 +21,6 @@
   margin: 5px 5px;
 }
 
-.list-labels {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.list>div {
-  max-width: 960px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 15px 5px;
-}
-
-.list a {
-  width: 100%;
-}
-
 .shop__options {
   padding: 10px 20px;
   margin: 0 5px;
@@ -123,6 +104,7 @@
   left: 0;
   width: 100%;
   border: 1px solid #ccc;
+  background: white;
   border-top: none;
   display: none;
   z-index: 5;

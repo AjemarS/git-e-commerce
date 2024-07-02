@@ -31,7 +31,7 @@ const HoverableSelect: React.FC<HoverableSelectProps> = ({ options, handleClick 
       onMouseLeave={() => setIsOpen(false)}
     >
       <div className="selected-option" onClick={() => setIsOpen(!isOpen)}>
-        <SortIcon className="sort-icon" fontSize="large"/>
+        <SortIcon className="sort-icon" fontSize="medium" />
         {selectedOption}
       </div>
       {isOpen && (
@@ -39,7 +39,11 @@ const HoverableSelect: React.FC<HoverableSelectProps> = ({ options, handleClick 
           {options.map((option) => (
             <li key={option.value} onClick={() => handleOptionClick(option)}>
               {option.placeholder}
-              {option.value.split("")[0] === "-" ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
+              {option.value.split("")[0] === "-" ? (
+                <ArrowDownwardIcon fontSize="small" />
+              ) : (
+                <ArrowUpwardIcon fontSize="small" />
+              )}
             </li>
           ))}
         </ul>
