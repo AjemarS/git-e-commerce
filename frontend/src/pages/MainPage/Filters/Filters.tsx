@@ -52,56 +52,55 @@ const Filters: React.FC = () => {
     const queryString = buildQueryString(filters);
 
     navigate(location.pathname + "?" + queryString, { replace: true });
+
+    setApplyButtonPosition(null);
+    const shop = document.getElementById("shop");
+    if (shop) {
+      shop.classList.remove("blur");
+    }
   };
 
   const handleFocus = (id: string) => {
     const input = document.getElementById(id);
     const rect = input && input.getBoundingClientRect();
-    rect && setApplyButtonPosition({ top: rect.top + window.scrollY + 9, left: rect.right + 10 });
-  };
 
-  const handleBlur = () => {
-    setApplyButtonPosition(null);
+    rect && setApplyButtonPosition({ top: rect.top + window.scrollY + 9, left: rect.right + 10 });
+
+    const shop = document.getElementById("shop");
+    if (shop) {
+      shop.classList.add("blur");
+    }
   };
 
   return (
     <aside className="filters">
       <div className="filters__layout">
         {applyButtonPosition && (
-          <div className="overlay">
-            <button
-              className="filters__apply__btn"
-              onClick={handleApplyFilters}
-              style={{
-                position: "absolute",
-                top: `${applyButtonPosition.top}px`,
-                left: `${applyButtonPosition.left}px`,
-              }}
-            >
-              Apply Filters
-            </button>
-          </div>
+          <button
+            className="filters__apply__btn"
+            onClick={handleApplyFilters}
+            style={{
+              position: "absolute",
+              top: `${applyButtonPosition.top}px`,
+              left: `${applyButtonPosition.left}px`,
+            }}
+          >
+            Apply Filters
+          </button>
         )}
         <FiltersItem
           title="Categories"
           filters={categories}
           onFilterChange={handleCategoryChange}
           onFocus={handleFocus}
-          onBlur={handleBlur}
         />
         <FiltersItem
           title="Manufacturers"
           filters={manufacturers}
           onFilterChange={handleManufacturerChange}
           onFocus={handleFocus}
-          onBlur={handleBlur}
         />
-        <PriceRangeInput
-          title="Price"
-          onFilterChange={handlePriceChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
+        <PriceRangeInput title="Price" onFilterChange={handlePriceChange} onFocus={handleFocus} />
       </div>
     </aside>
   );

@@ -7,15 +7,9 @@ interface PriceRangeInputProps {
   title: string;
   onFilterChange: (selected: number[]) => void;
   onFocus: (id: string) => void;
-  onBlur: () => void;
 }
 
-const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
-  title,
-  onFilterChange,
-  onFocus,
-  onBlur,
-}) => {
+const PriceRangeInput: React.FC<PriceRangeInputProps> = ({ title, onFilterChange, onFocus }) => {
   const [isPriceFilterOpen, setIsPriceFilterOpen] = useState(true);
 
   const { priceRange } = useAppSelector((state) => state.filter);
@@ -55,10 +49,6 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
     onFocus(title);
   };
 
-  const handleBlur = () => {
-    onBlur();
-  };
-
   return (
     <div className="filters__menu">
       <div
@@ -84,7 +74,6 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
             value={minPrice}
             onChange={handleMinPrice}
             onFocus={handleFocus}
-            onBlur={handleBlur}
           />
           -
           <input
@@ -94,7 +83,6 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
             value={maxPrice}
             onChange={handleMaxPrice}
             onFocus={handleFocus}
-            onBlur={handleBlur}
           />
         </div>
         <div className="filters__menu__price--slider">
@@ -104,7 +92,6 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = ({
             onChange={handlePriceRangeChange}
             onChangeCommitted={() => onFilterChange(price)}
             onFocus={handleFocus}
-            onBlur={handleBlur}
             max={priceRange.maxPrice}
             min={priceRange.minPrice}
             valueLabelDisplay="auto"

@@ -7,10 +7,9 @@ type FiltersItemProps = {
   filters: string[];
   onFilterChange: (selected: string[]) => void;
   onFocus: (id: string) => void;
-  onBlur: () => void;
 };
 
-const FiltersItem = ({ title, filters, onFilterChange, onFocus, onBlur }: FiltersItemProps) => {
+const FiltersItem = ({ title, filters, onFilterChange, onFocus }: FiltersItemProps) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(true);
@@ -19,7 +18,6 @@ const FiltersItem = ({ title, filters, onFilterChange, onFocus, onBlur }: Filter
     onFocus(title);
   };
 
-  const handleBlur = () => onBlur();
 
   // При новому фільтрі в масиві, використовуємо батьківську функцію для передачі наверх масиву фільтру
   useEffect(() => {
@@ -62,7 +60,6 @@ const FiltersItem = ({ title, filters, onFilterChange, onFocus, onBlur }: Filter
                 type="checkbox"
                 onChange={(e) => handleInputChange(filter, e)}
                 onFocus={handleFocus}
-                onBlur={handleBlur}
               />
               {filter}
             </label>

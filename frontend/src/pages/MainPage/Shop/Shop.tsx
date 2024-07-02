@@ -57,7 +57,7 @@ const Shop: React.FC<ShopProps> = ({ query }) => {
   }, [dispatch, query]);
 
   return (
-    <article className="shop">
+    <article className="shop" id="shop">
       <section className="shop__options">
         <div className="shop__options--sorting">
           <HoverableSelect handleClick={sortProducts} options={OPTIONS} />

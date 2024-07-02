@@ -124,6 +124,11 @@
   display: block;
 }
 
+.blur {
+  filter: blur(3px);
+  pointer-events: none;
+}
+
 @media screen and (max-width: 1200px) {
   .cards>div {
     justify-content: center;
