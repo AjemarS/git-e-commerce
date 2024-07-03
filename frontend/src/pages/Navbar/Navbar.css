@@ -109,29 +109,114 @@ header {
   background-color: olive;
 }
 
-.userBox {
-  width: 140px;
-}
-
-.cartBox {
-  width: 300px;
-}
-
 .navbar__item__popups {
   position: absolute;
   top: 36px;
   left: 50%;
-  padding: 50px 30px;
+  padding: 10px;
   transform: translate(-50%);
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   background-color: white;
   border-radius: 5px;
   border: 1px dotted olive;
   box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.2);
+}
+
+.userBox {
+  width: 200px;
+}
+
+.cart-box {
+  width: 400px;
+  min-height: 200px;
+  padding: 20px;
+}
+
+.cart-box__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-box__title--text {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cart-box__title--btn {
+  height: 24px;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.cart-box__title--btn:hover {
+  background-color: #ddd;
+}
+
+.cart-box__content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-box__empty {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-box__total {
+  align-self: self-end;
+  font-weight: 700;
+}
+
+.cart-box__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.cart-box__item--img {
+  width: 80px;
+  height: 70px;
+  margin-right: 10px;
+}
+
+.cart-box__item__info {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.cart-box__item__info--title {
+  font-size: 16px;
+}
+
+.cart-box__item__info__price {
+  width: 150px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cart-box__btn--delete {
+  padding: 2px 5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cart-box__btn--quantity {
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 640px) {

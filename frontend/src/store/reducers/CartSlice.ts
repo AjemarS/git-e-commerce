@@ -56,12 +56,52 @@ const cartSlice = createSlice({
         state.cart.total_price -= Number(existingProduct.price);
       }
     },
+    addQuantity: (state, action: PayloadAction<number>) => {
+      const existingProductIndex = state.cart.products.findIndex(
+        (product) => product.id === action.payload
+      );
+
+      if (existingProductIndex !== -1) {
+        const existingProduct = state.cart.products[existingProductIndex];
+
+        existingProduct.quantity++;
+
+        state.cart.total_price += Number(existingProduct.price);
+      }
+    },
+    subtractQuantity: (state, action: PayloadAction<number>) => {
+      const existingProductIndex = state.cart.products.findIndex(
+        (product) => product.id === action.payload
+      );
+
+      if (existingProductIndex !== -1) {
+        const existingProduct = state.cart.products[existingProductIndex];
+
+        existingProduct.quantity--;
+
+        if (existingProduct.quantity <= 0) {
+          cartSlice.caseReducers.removeCartItem(state, {
+            payload: action.payload,
+            type: action.type,
+          });
+        } else {
+          state.cart.total_price -= Number(existingProduct.price);
+        }
+      }
+    },
     setIsHoveredCartBox: (state, action: PayloadAction<boolean>) => {
       state.isHoveredCartBox = action.payload;
     },
   },
 });
 
-export const { setCart, addCartItem, removeCartItem, setIsHoveredCartBox } = cartSlice.actions;
+export const {
+  setCart,
+  addCartItem,
+  removeCartItem,
+  addQuantity,
+  subtractQuantity,
+  setIsHoveredCartBox,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

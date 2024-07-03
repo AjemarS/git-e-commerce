@@ -43,6 +43,7 @@ const ProductCard: FC<ProductProps> = ({ product }) => {
       dispatch(
         addCartItem({
           id: product.id,
+          image: product.image,
           name: product.name,
           price: product.price,
           quantity: 1,
